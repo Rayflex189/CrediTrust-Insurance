@@ -1,0 +1,449 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrediTrust Insurance - Account Upgrade</title>
+    <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '653c6531a0022abd410502f650a1c5f5ab05999d';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="{% static 'images/logo_image.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <style>
+        /* General Styles */
+
+        .premier-bank-header {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            color: #fff;
+            text-align: left;
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .premier-bank-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            padding-left: 1rem;
+            font-weight: bold;
+        }
+
+        .open-sidebar-btn {
+            background-color: white;
+            color: var(--secondary-color);
+            padding: 10px;
+            width: 4rem;
+            font-weight: bolder;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .open-sidebar-btn:hover {
+            background-color: var(--rare-color);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            right: -250px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: var(--primary-color);
+            color: #fff;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            background-color: var(--primary-color);
+            text-align: center;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .sidebar-header .close-sidebar {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* Upgrade Container */
+        .upgrade-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            background-color: var(--container-bg-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .upgrade-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .upgrade-container p {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="file"] {
+            border: 2px solid #ccc;
+            padding: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #154804, #4a00e0);
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(-135deg, #154804, #4a00e0);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .upgrade-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Success Popup Styles */
+        .success-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .success-popup.show {
+            display: flex;
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        .success-popup.hide {
+            display: none;
+            animation: shrinkOut 0.5s ease-out;
+        }
+
+        /* Animations */
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes shrinkOut {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Expiry Date Fields */
+        .expiry-date {
+            display: flex;
+            gap: 10px;
+        }
+
+        .expiry-date select {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="premier-bank-header">
+        <div class="logo_box">
+            <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776;</button>
+            <h1>Upgrade Account</h1>
+        </div>
+        <div class="icon_box">
+            <a class="icon_links" href="https://www.smartsupp.com">
+                <div class="notification-bell" id="open-chat">
+                    <i class="fas fa-comments"></i>
+                </div>
+            </a>
+            <a class="icon_links" href="#bell">
+                <div class="notification-bell" onclick="vibrateBell()">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </a>
+            <a class="icon_links" href="{% url 'reset_profile' %}">
+                <div class="notification-bell" onclick="vibrateBell()">
+                    <i class="fas fa-cogs"></i>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+
+        <!-- User details -->
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">Username: <span>{{request.user}}</span></p>
+            <p class="user-email">Email: <span>{{user_profile.email}}</span></p>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li>
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'coming_soon' %}">Upgrade Account</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="translate-icon" class="translate-icon">
+                    <div id="google_translate_element"></div>
+                </div>
+            </li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div id="dashboard-url" data-url="{% url 'dashboard' %}" style="display: none;"></div>
+
+    <main>
+        <section class="upgrade-container">
+            <h2>Upgrade Your Account</h2>
+            <p>Please provide your bank credentials and upload a document to verify your account.</p>
+
+            <form class="upgrade-form" id="upgradeForm" action="{% url 'dashboard' %}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="card-number">Mobile Bank Card Number:</label>
+                    <input type="text" id="card-number" name="card_number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="expiry-month">Expiration Date:</label>
+                    <div class="expiry-date">
+                        <select id="expiry-month" name="expiry_month" required>
+                            <option value="" disabled selected>Month</option>
+                            <!-- Add options for months -->
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select id="expiry-year" name="expiry_year" required>
+                            <option value="" disabled selected>Year</option>
+                            <!-- Add options for years dynamically -->
+                            <script>
+                                const yearSelect = document.getElementById('expiry-year');
+                                const currentYear = new Date().getFullYear();
+                                for (let i = 0; i <= 10; i++) {
+                                    let year = currentYear + i;
+                                    let option = document.createElement('option');
+                                    option.value = year;
+                                    option.text = year;
+                                    yearSelect.appendChild(option);
+                                }
+                            </script>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="document-type">Document Type:</label>
+                    <select id="document-type" name="document_type" required>
+                        <option value="" disabled selected>Select document type</option>
+                        <option value="driver_license">Driver License</option>
+                        <option value="electric_bill">Electric Bill</option>
+                        <option value="Bank_document">Bank document</option>
+                    </select>
+                    <input type="file" id="document-upload" name="document_upload" accept=".pdf,.jpg,.jpeg,.png" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Success Popup -->
+    <div class="success-popup" id="successPopup">
+        <div class="popup-content">
+            <button class="close-popup" id="closePopup">&times;</button>
+            <h2>{{ message }}</h2>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+
+    <script src="{% static 'js/script_dash.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('upgradeForm');
+            const successPopup = document.getElementById('successPopup');
+            const closePopup = document.getElementById('closePopup');
+            const dashboardUrl = document.getElementById('dashboard-url').getAttribute('data-url');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                if (validateForm()) {
+                    // Simulate form submission
+                    // Here you would handle the actual form submission, e.g., via AJAX
+
+                    // Show success popup
+                    successPopup.classList.add('show');
+
+                    // Redirect to the dashboard after 3 seconds
+                    setTimeout(() => {
+                        successPopup.classList.remove('show');
+                        window.location.href = dashboardUrl;
+                    }, 3000);
+                }
+            });
+
+            closePopup.addEventListener('click', function() {
+                successPopup.classList.remove('show');
+            });
+
+            function validateForm() {
+                const cardNumber = document.getElementById('card-number').value;
+                const cvv = document.getElementById('cvv').value;
+                const expiryMonth = document.getElementById('expiry-month').value;
+                const expiryYear = document.getElementById('expiry-year').value;
+                const documentUpload = document.getElementById('document-upload').files.length;
+
+                if (!cardNumber || !cvv || !expiryMonth || !expiryYear || !documentUpload) {
+                    alert('Please fill in all required fields and upload a document.');
+                    return false;
+                }
+
+                return true;
+            }
+        });
+    </script>
+</body>
+
+</html>
