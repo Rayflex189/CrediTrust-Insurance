@@ -484,7 +484,7 @@ class UserProfile(models.Model):
         ('Joint Account', 'Joint Account'),
     ]
     account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
-    profile_pic = models.ImageField(default='d_profile.jfif', null=True, blank=True)
+    profile_pic = models.ImageField(default='d_profile.jfif', null=True, blank=True,)
     account_number = models.CharField(max_length=11, default=generate_account_number)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     linking_code = models.CharField(max_length=11, default=generate_code)
@@ -499,10 +499,8 @@ class UserProfile(models.Model):
 
     def save(self, *args, **kwargs):
         # Ensure profile_picture and document are not mistakenly set to a boolean
-        if isinstance(self.profile_picture, bool):
-            self.profile_picture = None
-        if isinstance(self.document, bool):
-            self.document = None
+        if isinstance(self.profile_pic, bool):
+            self.profile_pic = None
         
         if not self.account_number:
             self.account_number = generate_account_number()

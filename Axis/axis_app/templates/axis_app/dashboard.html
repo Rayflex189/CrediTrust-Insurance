@@ -904,7 +904,9 @@ opacity: 1;
                         <p>
                             {{user_profile.first_name}} {{user_profile.last_name}}
                         </p>
-                        <img src="{{user_profile.profile_pic.url}}" class="profile-img" alt="Profile Picture">
+                        <img src="{% if user_profile.profile_pic %}{{ user_profile.profile_pic.url }}{% else %}/static/images/d_profile.jfif{% endif %}" 
+                        class="profile-img" 
+                        alt="Profile Picture">
                     </div>
                 </div>
 
@@ -994,15 +996,7 @@ opacity: 1;
         <div id="paypalPopup" class="payment-popup">
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('paypalPopup')">&times;</button>
-                <h2>PayPal Method</h2>
-                {% if user_profile.is_linked %}
-                <p class="green">Your account is Activated. You can proceed with transactions.
-                </p>
-                {% else %}
-                    <p class="red">Your account is not Activated. Please purchase an activation pin to activate your account to proceed.</p>
-                    <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-                {% endif %}
-                <br>                <br>
+                <h2>PayPal Method</h2>            <br>
                 <form method="post" id="paypalForm">
                     {% csrf_token %}
                     <div class="form-group">
@@ -1023,14 +1017,6 @@ opacity: 1;
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('zellePopup')">&times;</button>
                 <h2>Zelle Method</h2>
-              {% if user_profile.is_linked %}
-                <p class="green">Your account is Activated. You can proceed with transactions.
-                </p>
-                {% else %}
-                    <p class="red">Your account is not Activated. Please purchase an activation pin to activate your account to proceed.</p>
-                    <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-                {% endif %}
-                <br>                <br>
                 <form method="post" id="zelleForm">
                      {% csrf_token %}
                     <div class="form-group">
@@ -1051,14 +1037,7 @@ opacity: 1;
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('venmoPopup')">&times;</button>
                 <h2>Cash App</h2>
-                                {% if user_profile.is_linked %}
-                <p class="green">Your account is Activated. You can proceed with transactions.
-                </p>
-                {% else %}
-                    <p class="red">Your account is not Activated. Please purchase an activation pin to activate your account to proceed.</p>
-                    <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-                {% endif %}
-                <br>                <br>
+
                 <form method="post" id="venmoForm">
                     {% csrf_token %}
                     <div class="form-group">
@@ -1079,14 +1058,6 @@ opacity: 1;
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('applePayPopup')">&times;</button>
                 <h2>Apple Pay Payment</h2>
-                                {% if user_profile.is_linked %}
-                <p class="green">Your account is Activated. You can proceed with transactions.
-                </p>
-                {% else %}
-                    <p class="red">Your account is not Activated. Please purchase an activation pin to activate your account to proceed.</p>
-                    <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-                {% endif %}
-                <br>                <br>
                 <form method="post" id="applePayForm">
                     {% csrf_token %}
                     <div class="form-group">
@@ -1107,14 +1078,7 @@ opacity: 1;
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('googlePayPopup')">&times;</button>
                 <h2>Google Pay Payment</h2>
-                                {% if user_profile.is_linked %}
-                <p class="green">Your account is Activated. You can proceed with transactions.
-                </p>
-                {% else %}
-                    <p class="red">Your account is not Activated. Please purchase an activation pin to activate your account to proceed.</p>
-                    <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-                {% endif %}
-                <br>                <br>
+
                 <form method="post" id="googlePayForm">
                      {% csrf_token %}
                     <div class="form-group">
@@ -1135,14 +1099,6 @@ opacity: 1;
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('amazonPayPopup')">&times;</button>
                 <h2>Amazon Pay Payment</h2>
-                                {% if user_profile.is_linked %}
-                <p class="green">Your account is Activated. You can proceed with transactions.
-                </p>
-                {% else %}
-                    <p class="red">Your account is not Activated. Please purchase an activation pin to activate your account to proceed.</p>
-                    <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-                {% endif %}
-                <br>                <br>
                 <form method="post" id="amazonPayForm">
                      {% csrf_token %}
                     <div class="form-group">

@@ -41,37 +41,29 @@ def analytics(request):
 @login_required(login_url='loginview')
 def bank_transfer(request):
     user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
-
+    # Handle the deposit form submission
     if request.method == 'POST':
-        form = DepositForm(request.POST, user_profile=user_profile)
+        form = DepositForm(request.POST)
         if form.is_valid():
             try:
-                if not user_profile.is_linked:
-                    form.add_error(None, "Please activate your account before making a deposit.")
+                deposit_amount = form.cleaned_data['amount']
+                if deposit_amount <= 0:
+                    form.add_error('amount', "Deposit amount must be greater than zero.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
-                    if deposit_amount <= 0:
-                        form.add_error('amount', "Deposit amount must be greater than zero.")
-                    else:
-                        if user_profile.balance >= deposit_amount:
-                            user_profile.balance -= deposit_amount
-                            user_profile.save()
+                    # Create a transaction record without updating the balance
+                    Transaction.objects.create(
+                        user=user_profile.user,
+                        amount=deposit_amount,
+                        balance_after=user_profile.balance,  # Keeping the existing balance
+                        description='Debit'
+                    )
 
-                            # Create a transaction record
-                            Transaction.objects.create(
-                                user=user_profile.user,
-                                amount=deposit_amount,
-                                balance_after=user_profile.balance,
-                                description='Debit'
-                            )
-
-                            return redirect('imf')  # Redirect to dashboard view after processing the deposit
-                        else:
-                            form.add_error('amount', "Insufficient funds.")
+                    return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
-        form = DepositForm(user_profile=user_profile)
+        form = DepositForm()
+
 
     context = {
         'user_profile': user_profile,
@@ -83,36 +75,29 @@ def bank_transfer(request):
 def skrill(request):
     user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
 
+    # Handle the deposit form submission
     if request.method == 'POST':
-        form = DepositForm(request.POST, user_profile=user_profile)
+        form = DepositForm(request.POST)
         if form.is_valid():
             try:
-                if not user_profile.is_linked:
-                    form.add_error(None, "Please activate your account before making a deposit.")
+                deposit_amount = form.cleaned_data['amount']
+                if deposit_amount <= 0:
+                    form.add_error('amount', "Deposit amount must be greater than zero.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
-                    if deposit_amount <= 0:
-                        form.add_error('amount', "Deposit amount must be greater than zero.")
-                    else:
-                        if user_profile.balance >= deposit_amount:
-                            user_profile.balance -= deposit_amount
-                            user_profile.save()
+                    # Create a transaction record without updating the balance
+                    Transaction.objects.create(
+                        user=user_profile.user,
+                        amount=deposit_amount,
+                        balance_after=user_profile.balance,  # Keeping the existing balance
+                        description='Debit'
+                    )
 
-                            # Create a transaction record
-                            Transaction.objects.create(
-                                user=user_profile.user,
-                                amount=deposit_amount,
-                                balance_after=user_profile.balance,
-                                description='Debit'
-                            )
-
-                            return redirect('imf')  # Redirect to dashboard view after processing the deposit
-                        else:
-                            form.add_error('amount', "Insufficient funds.")
+                    return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
-        form = DepositForm(user_profile=user_profile)
+        form = DepositForm()
+
 
     context = {
         'user_profile': user_profile,
@@ -191,37 +176,28 @@ def dashboard(request):
         alert_message = None
         request.session['show_alert'] = False  # Ensure flag is False if account is linked
 
-    # Handle the deposit form submission
+   # Handle the deposit form submission
     if request.method == 'POST':
-        form = DepositForm(request.POST, user_profile=user_profile)
+        form = DepositForm(request.POST)
         if form.is_valid():
             try:
-                if not user_profile.is_linked:
-                    form.add_error(None, "Please activate your account before making a deposit.")
+                deposit_amount = form.cleaned_data['amount']
+                if deposit_amount <= 0:
+                    form.add_error('amount', "Deposit amount must be greater than zero.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
-                    if deposit_amount <= 0:
-                        form.add_error('amount', "Deposit amount must be greater than zero.")
-                    else:
-                        if user_profile.balance >= deposit_amount:
-                            user_profile.balance -= deposit_amount
-                            user_profile.save()
+                    # Create a transaction record without updating the balance
+                    Transaction.objects.create(
+                        user=user_profile.user,
+                        amount=deposit_amount,
+                        balance_after=user_profile.balance,  # Keeping the existing balance
+                        description='Debit'
+                    )
 
-                            # Create a debit transaction record
-                            Transaction.objects.create(
-                                user=user_profile.user,
-                                amount=deposit_amount,
-                                balance_after=user_profile.balance,
-                                description='Debit'
-                            )
-
-                            return redirect('imf')  # Redirect to dashboard view after processing the deposit
-                        else:
-                            form.add_error('amount', "Insufficient funds.")
+                    return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
-        form = DepositForm(user_profile=user_profile)
+        form = DepositForm()
 
     context = {
         'user_profile': user_profile,
@@ -279,7 +255,7 @@ def imf(request):
             # Validate the OTP here (e.g., check if it matches the expected value)
             if validate_imf(imf_code_input, user_profile):  # Define this function based on your validation logic
                 # Redirect to success page or dashboard
-                return redirect('tac')
+                return redirect('vat')
             else:
                 form.add_error(None, 'Invalid IMF code')
     else:
