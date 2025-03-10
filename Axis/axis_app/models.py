@@ -498,10 +498,12 @@ class UserProfile(models.Model):
     is_upgraded = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+        # Ensure profile_picture and document are not mistakenly set to a boolean
+        if isinstance(self.profile_picture, bool):
+            self.profile_picture = None
+        if isinstance(self.document, bool):
+            self.document = None
+        
         if not self.account_number:
             self.account_number = generate_account_number()
         super().save(*args, **kwargs)
-
-
-    def __str__(self):
-        return self.user.username

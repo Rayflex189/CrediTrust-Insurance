@@ -357,8 +357,16 @@ class UserProfileForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(attrs={'type': 'date'})
         }
 
+    def clean_profile_pic(self):
+        file = self.cleaned_data.get("profile_pic")
+        if isinstance(file, bool):  # Prevent assigning a boolean
+            return None
+        return file
+
     def save(self, commit=True):
         user = super(UserProfileForm, self).save(commit=False)
+
+        print("Raw profile_pic data:", self.cleaned_data.get("profile_pic"))
         user.first_name = self.cleaned_data['first_name']
         user.middle_name = self.cleaned_data['middle_name']
         user.last_name = self.cleaned_data['last_name']
@@ -366,12 +374,18 @@ class UserProfileForm(forms.ModelForm):
         user.date_of_birth = self.cleaned_data['date_of_birth']
         user.status = self.cleaned_data['status']
         user.country = self.cleaned_data['country']
-        user.Gender = self.cleaned_data['Gender']  # Ensure correct field name
+        user.Gender = self.cleaned_data['Gender'] # Fix field name
         user.account_type = self.cleaned_data['account_type']
         user.currency = self.cleaned_data['currency']
-        user.profile_pic = self.cleaned_data['profile_pic']
         
-        # New fields
+        # Ensure profile_pic is handled correctly
+        profile_pic = self.cleaned_data.get('profile_pic')
+        if profile_pic and isinstance(profile_pic, bool):
+            user.profile_pic = None
+        else:
+            user.profile_pic = profile_pic
+
+        # Assign new fields
         user.social_security_number = self.cleaned_data['social_security_number']
         user.tax_id = self.cleaned_data['tax_id']
         user.occupation = self.cleaned_data['occupation']
@@ -387,7 +401,6 @@ class UserProfileForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
 
 class LinkingCodeForm(forms.Form):
     linking_code = forms.CharField(max_length=6, label='Enter Your Unique Account Activation Code')
