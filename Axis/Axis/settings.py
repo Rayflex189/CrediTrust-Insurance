@@ -17,9 +17,9 @@ import dj_database_url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
+        'NAME': 'creditrust_database',
+        'USER': 'creditrust_database_user',
+        'PASSWORD': 'NeYLLwLtDGtNN4oaYoZis6w5clSgDdZH',
         'HOST': 'dpg-cuqgt7tumphs73fca5q0-a.oregon-postgres.render.com',  # Check this
         'PORT': '5432',
     },
