@@ -139,13 +139,8 @@ STATICFILES_DIRS = [
     # Add more directories if needed
 ]
 
-# Define STATIC_ROOT to collect static files for production and staging
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-MEDIA_URL = '/external_st/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/external_st')
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

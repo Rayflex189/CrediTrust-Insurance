@@ -905,9 +905,12 @@ opacity: 1;
                         <p>
                             {{user_profile.first_name}} {{user_profile.last_name}}
                         </p>
-                        <img src="{% if user_profile.profile_pic %}{{ user_profile.profile_pic.url }}{% else %}/static/images/d_profile.jfif{% endif %}" 
-                        class="profile-img" 
-                        alt="Profile Picture">
+                        {% if user_profile.profile_pic %}
+    <img src="{{ user_profile.profile_pic.url }}" class="profile-img" alt="Profile Picture">
+{% else %}
+    <img src="{% static 'images/d_profile.jfif' %}" class="profile-img" alt="Default Profile Picture">
+{% endif %}
+
                     </div>
                 </div>
 
