@@ -20,7 +20,7 @@ DATABASES = {
         'NAME': 'creditrust_database',
         'USER': 'creditrust_database_user',
         'PASSWORD': 'NeYLLwLtDGtNN4oaYoZis6w5clSgDdZH',
-        'HOST': 'dpg-cuqgt7tumphs73fca5q0-a.oregon-postgres.render.com',  # Check this
+        'HOST': 'dpg-cv73pjdumphs738eaop0-a.oregon-postgres.render.com',  # Check this
         'PORT': '5432',
     },
      'OPTIONS': {
