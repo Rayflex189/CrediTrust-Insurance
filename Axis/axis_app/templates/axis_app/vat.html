@@ -5,20 +5,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CrediTrust Insurance - Authentication</title>
-<!-- Smartsupp Live Chat script -->
 <script type="text/javascript">
-  var _smartsupp = _smartsupp || {};
-  _smartsupp.key = '653c6531a0022abd410502f650a1c5f5ab05999d';
-  window.smartsupp||(function(d) {
-    var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-    c.type='text/javascript';c.charset='utf-8';c.async=true;
-    c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-  })(document);
-  </script>
-  <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+  window.helpcrunchSettings = {
+    organization: 'creditrustinsurance',
+    appId: 'b3648f3e-4f02-40eb-a64d-b251e4e416a7',
+  };
+</script>
+
+<script type="text/javascript">
+  (function(w,d){var hS=w.helpcrunchSettings;if(!hS||!hS.organization){return;}var widgetSrc='https://embed.helpcrunch.com/sdk.js';w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments)};w.HelpCrunch.q=[];function r(){if (d.querySelector('script[src="' + widgetSrc + '"')) { return; }var s=d.createElement('script');s.async=1;s.type='text/javascript';s.src=widgetSrc;(d.body||d.head).appendChild(s);}if(d.readyState === 'complete'||hS.loadImmediately){r();} else if(w.attachEvent){w.attachEvent('onload',r)}else{w.addEventListener('load',r,false)}})(window, document)
+</script>
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
-<link rel="icon" href="{% static 'images/logo_image.jpg' %}" type="image/x-icon" />
+<link rel="icon" href="{% static 'images/logos.webp' %}" type="image/x-icon" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
 body {
