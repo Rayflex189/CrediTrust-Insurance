@@ -859,7 +859,80 @@ transform: scale(1);
 opacity: 1;
 }
 }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            animation: fadeIn 1s ease-in-out;
+        }
 
+        .form-group {
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlide 0.8s ease-in-out forwards;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Delay animations for each input */
+        .form-group:nth-child(1) { animation-delay: 0.2s; }
+        .form-group:nth-child(2) { animation-delay: 0.4s; }
+        .form-group:nth-child(3) { animation-delay: 0.6s; }
+        .form-group:nth-child(4) { animation-delay: 0.8s; }
+
+        /* Styled Select Dropdown */
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background: #fff;
+            transition: 0.3s;
+        }
+
+        select:hover {
+            border-color: #007bff;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Error Messages */
+        .errors {
+            color: red;
+            margin-top: 10px;
+        }
 
     </style>
 </head>
@@ -1116,18 +1189,48 @@ opacity: 1;
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('amazonPayPopup')">&times;</button>
                 <h2>Crypto Pay Payment</h2>
-                <form method="post" id="amazonPayForm">
-                     {% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account Number">
-                        <label for="paypalWithdrawalAmount">Amount</label>
-                        <br>
-                       {{form.amount}}
-                    </div>
-                    <button type="submit" class="btn btn-primary">Transfer to Crypto Pay</button>
-                    <br><br>
-                    <div class="errors">{{form.errors}}</div>
-                </form>
+                    <form method="post" id="amazonPayForm">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account Number">
+            <label for="paypalWithdrawalAmount">Amount</label>
+            <br>
+            {{ form.amount }}
+        </div>
+
+        <!-- Wallet Address Field -->
+        <div class="form-group">
+            <input type="text" class="form-control" id="walletAddress" placeholder="Enter Wallet Address">
+            <label for="walletAddress">Wallet Address</label>
+            <br>
+        </div>
+
+        <!-- Network Type (Fixed to TRC-20) -->
+        <div class="form-group">
+            <label for="networkType">Network Type</label>
+            <select class="form-control" id="networkType" disabled>
+                <option selected>TRC-20</option>
+            </select>
+        </div>
+
+        <!-- Cryptocurrency Selection -->
+        <div class="form-group">
+            <label for="cryptoCurrency">Select Cryptocurrency</label>
+            <select class="form-control" id="cryptoCurrency" name="crypto_currency">
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="XRP">Ripple (XRP)</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Transfer to Crypto Pay</button>
+        
+        <br><br>
+        <div class="errors">{{ form.errors }}</div>
+    </form
             </div>
         </div>
 
