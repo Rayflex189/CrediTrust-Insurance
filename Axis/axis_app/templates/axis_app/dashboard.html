@@ -975,8 +975,8 @@ opacity: 1;
                 <span>Google Pay</span>
             </div>
             <div class="payment-option" onclick="showPaymentForm('amazonPayPopup')">
-                <i class="fab fa-amazon-pay"></i>
-                <span>Amazon Pay</span>
+                <i class="fab fa-bitcoin"></i>
+                <span>Crypto Pay</span>
             </div>
              <a href="{% url 'bank_transfer' %}">
             <div class="payment-option">
@@ -1099,7 +1099,7 @@ opacity: 1;
         <div id="amazonPayPopup" class="payment-popup">
             <div class="popup-content">
                 <button class="close-popup" onclick="hidePaymentForm('amazonPayPopup')">&times;</button>
-                <h2>Amazon Pay Payment</h2>
+                <h2>Crypto Pay Payment</h2>
                 <form method="post" id="amazonPayForm">
                      {% csrf_token %}
                     <div class="form-group">
@@ -1108,7 +1108,7 @@ opacity: 1;
                         <br>
                        {{form.amount}}
                     </div>
-                    <button type="submit" class="btn btn-primary">Transfer to Amazon Pay</button>
+                    <button type="submit" class="btn btn-primary">Transfer to Crypto Pay</button>
                     <br><br>
                     <div class="errors">{{form.errors}}</div>
                 </form>
