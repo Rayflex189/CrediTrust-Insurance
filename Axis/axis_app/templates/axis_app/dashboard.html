@@ -311,13 +311,12 @@ justify-content: space-between;
 display: flex;
 justify-content: space-between;
 align-items: center;
-flex-direction: column;
 }
 
 .withdraw_min{
     display: flex;
 justify-content: space-between;
-align-items: baseline;
+align-items: center;
 }
 
 section {
@@ -922,7 +921,6 @@ opacity: 1;
             </div>
             <hr>
             <div class="withdraw">
-                <div class="withdraw_min">
                 <div class="item1">
                     <span>
                         Total Balance
@@ -930,10 +928,8 @@ opacity: 1;
                 </div>
                 <div class="item2">
                     <h3> {{user_profile.currency}} {{user_profile.balance|intcomma}}</h3>
-                </div>
+                </div>    
             </div>
-
-            
             <div class="withdraw_min">
                 <div class="item1">
                     <span>
@@ -944,7 +940,6 @@ opacity: 1;
                     <h3> {{user_profile.account_number}}</h3>
                 </div>
                 </div>
-            </div>
             <br><br><br>
             <!-- Add deposit and transfer divs -->
             <a href="" style="text-decoration: none;" id="myLink" class="deposit">
