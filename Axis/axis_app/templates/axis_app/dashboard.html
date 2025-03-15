@@ -1119,7 +1119,7 @@ opacity: 1;
                 <form method="post" id="amazonPayForm">
                      {% csrf_token %}
                     <div class="form-group">
-                        <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account Number">
+                        <input type="text" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account Number">
                         <label for="paypalWithdrawalAmount">Amount</label>
                         <br>
                        {{form.amount}}
@@ -1144,7 +1144,7 @@ opacity: 1;
         <div id="infoPopup" class="info-popup">
             <div class="popup-content">
                 <button class="close-popup" onclick="toggleInfoPopup()">&times;</button>
-                <h2>Welcome to Standard Capital Online Banking!</h2>
+                <h2>Welcome to CTBANK!</h2>
                 <p class="info-text">
                     To make a deposit, please follow these easy steps:
                     <br><br>
