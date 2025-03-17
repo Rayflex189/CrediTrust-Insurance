@@ -133,16 +133,9 @@ body .skiptranslate > iframe {
         display: flex; /* Show bottom navbar on mobile */
     }
 }
-
 .bottom_nav{
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--nav-color);
     display: flex;
     justify-content: space-around;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .popup {
@@ -973,6 +966,11 @@ footer{
                 </span>
                 </div>
     </section>
+    <!-- Bottom Navbar for Mobile -->
+<div class="bottom_nav">
+    <a href="{% url 'loginview' %}"><button class="login">LOGIN</button></a>
+    <a href="{% url 'register' %}"><button class="login" id="register">OPEN ACCOUNT</button></a>
+</div>
 </div>
     
 <section class="routing">
@@ -1254,11 +1252,7 @@ footer{
     </article>
     <span><i style="color: #fff;">Federally Insured by NCUA</i></span>
     </section>
-<!-- Bottom Navbar for Mobile -->
-<div class="bottom_nav">
-    <a href="{% url 'loginview' %}"><button class="login">LOGIN</button></a>
-    <a href="{% url 'register' %}"><button class="login" id="register">OPEN ACCOUNT</button></a>
-</div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
