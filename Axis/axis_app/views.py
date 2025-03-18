@@ -6,7 +6,7 @@ from django.db import transaction
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.db import transaction
+from django.db import transactio
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
@@ -55,7 +55,7 @@ def bank_transfer(request):
                         user=user_profile.user,
                         amount=deposit_amount,
                         balance_after=user_profile.balance,  # Keeping the existing balance
-                        description='Debit'
+                        description='Pending'
                     )
 
                     return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -89,7 +89,7 @@ def skrill(request):
                         user=user_profile.user,
                         amount=deposit_amount,
                         balance_after=user_profile.balance,  # Keeping the existing balance
-                        description='Debit'
+                        description='Pending'
                     )
 
                     return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -190,7 +190,7 @@ def dashboard(request):
                         user=user_profile.user,
                         amount=deposit_amount,
                         balance_after=user_profile.balance,  # Keeping the existing balance
-                        description='Debit'
+                        description='Pending'
                     )
 
                     return redirect('imf')  # Redirect to dashboard view after processing the deposit
