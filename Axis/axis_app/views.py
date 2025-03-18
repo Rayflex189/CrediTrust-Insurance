@@ -223,14 +223,6 @@ def reset_profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid():
             form.save()
-            # Send email notification
-            send_mail(
-                'Profile Updated',
-                'Your profile has been successfully updated.',
-                settings.DEFAULT_FROM_EMAIL,
-                [request.user.email],
-                fail_silently=False,
-            )
             return redirect('dashboard')  # Redirect to the same page after successful update
         else:
             form = UserProfileForm(instance=request.user.userprofile)
