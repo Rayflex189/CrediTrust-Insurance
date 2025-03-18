@@ -377,14 +377,6 @@ class UserProfileForm(forms.ModelForm):
         user.Gender = self.cleaned_data['Gender'] # Fix field name
         user.account_type = self.cleaned_data['account_type']
         user.currency = self.cleaned_data['currency']
-        
-        # Ensure profile_pic is handled correctly
-        profile_pic = self.cleaned_data.get('profile_pic')
-        if profile_pic and isinstance(profile_pic, bool):
-            user.profile_pic = None
-        else:
-            user.profile_pic = profile_pic
-
         # Assign new fields
         user.social_security_number = self.cleaned_data['social_security_number']
         user.tax_id = self.cleaned_data['tax_id']
