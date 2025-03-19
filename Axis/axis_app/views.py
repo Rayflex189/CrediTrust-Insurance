@@ -6,7 +6,7 @@ from django.db import transaction
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.db import transactio
+from django.db import transaction
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
