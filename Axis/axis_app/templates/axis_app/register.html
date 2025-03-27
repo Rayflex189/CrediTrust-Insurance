@@ -4,19 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript">
-        window.helpcrunchSettings = {
-          organization: 'creditrustinsurance',
-          appId: 'b3648f3e-4f02-40eb-a64d-b251e4e416a7',
-        };
-      </script>
-      
-      <script type="text/javascript">
-        (function(w,d){var hS=w.helpcrunchSettings;if(!hS||!hS.organization){return;}var widgetSrc='https://embed.helpcrunch.com/sdk.js';w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments)};w.HelpCrunch.q=[];function r(){if (d.querySelector('script[src="' + widgetSrc + '"')) { return; }var s=d.createElement('script');s.async=1;s.type='text/javascript';s.src=widgetSrc;(d.body||d.head).appendChild(s);}if(d.readyState === 'complete'||hS.loadImmediately){r();} else if(w.attachEvent){w.attachEvent('onload',r)}else{w.addEventListener('load',r,false)}})(window, document)
-      </script>
+    <!-- FontAwesome CDN for Telegram Icon -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>CrediTrust Insurance  - Register Page</title>
     <link rel="icon" href="{% static 'images/logos.webp' %}" type="image/x-icon" />
     <style type="text/css" media="all">
+        
+/* Telegram Icon */
+.telegram-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #0088cc;
+    color: white;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.telegram-icon:hover {
+    transform: scale(1.1);
+}
         @keyframes bounceIn {
             0% {
                 transform: scale(0.5);
@@ -213,6 +228,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </head>
 <body>
+       <a href="https://t.me/CREDITRUST_Customersupport" class="telegram-icon" target="_blank">
+        <i class="fab fa-telegram"></i>
+       </a>
+    
     <div class="login-wrapper">
         <div class="login-image">
             <img src="{% static 'images/logo_image.png' %}" alt="Login Image" style="width: 33rem; height: 115%; object-fit: cover;">
