@@ -119,6 +119,20 @@ def Upgrade_Account(request):
 
         # Redirect to the 'dashboard' view after form submission
         return redirect('pendingPro')  # Redirect to the dashboard view
+
+        # Redirect to the 'dashboard' view after form submission
+        return redirect('pendingPro')  # Redirect to the dashboard view
+
+       # Context to render on the page
+         context = {
+        'user_profile': user_profile,
+        'message': message,
+        'months': months,
+        'years': years,
+         }
+         return render(request, 'bank_app/account_upgrade.html', context)
+    
+
         
 
 @login_required(login_url='loginview')
