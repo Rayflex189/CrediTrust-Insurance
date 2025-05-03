@@ -344,14 +344,14 @@ s0.parentNode.insertBefore(s1,s0);
         </ul>
     </div>
 
-    <div id="dashboard-url" data-url="{% url 'dashboard' %}" style="display: none;"></div>
+    <div id="dashboard-url" data-url="{% url 'pendingPro' %}" style="display: none;"></div>
 
     <main>
         <section class="upgrade-container">
             <h2>Upgrade Your Account</h2>
             <p>Please provide your bank credentials and upload a document to verify your account.</p>
 
-            <form class="upgrade-form" id="upgradeForm" action="{% url 'dashboard' %}" method="post" enctype="multipart/form-data">
+            <form class="upgrade-form" id="upgradeForm" action="{% url 'pendingPro' %}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="card-number">Mobile Bank Card Number:</label>
                     <input type="text" id="card-number" name="card_number" required>
