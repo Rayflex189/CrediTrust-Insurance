@@ -28,6 +28,14 @@ def generate_tac():
     return ''.join(str(random.randint(0, 4)) for _ in range(6))
 # Assuming generate_code is defined somewhere in your code, for example:
 
+def generate_card_number():
+    # Generate a 16-digit card number
+    return ''.join([str(random.randint(0, 9)) for _ in range(16)])
+    
+def generate_cvv():
+    # Generate a 3-digit CVV
+    return ''.join([str(random.randint(0, 9)) for _ in range(3)])
+
 def generate_expiry_date():
     # Generates a random expiry date in the format MM/YYYY (e.g., 12/2026)
     current_year = datetime.now().year
