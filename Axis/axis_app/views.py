@@ -70,7 +70,7 @@ def bank_transfer(request):
         'form': form,
     }
     return render(request, 'axis_app/bank_transfer.html', context)
-
+    
 @login_required
 def Upgrade_Account(request):
     try:
@@ -84,53 +84,46 @@ def Upgrade_Account(request):
     else:
         message = 'Account upgrade processing. Contact support for more information.'
 
-    # Months and years for dropdowns (this might still be useful for displaying in the form)
+    # Months and years for dropdowns
     months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
     current_year = datetime.now().year
     years = [str(year) for year in range(current_year, current_year + 10)]
 
     # If the form is submitted via POST
     if request.method == "POST":
-        # Get form data (Card Number, CVV, Expiry Date)
+        # Get form data
         card_number = request.POST.get('card_number')
         cvv = request.POST.get('cvv')
-        expiry_date = request.POST.get('expiry_date')  # This is now the full MM/YYYY value
+        expiry_date = request.POST.get('expiry_date')
 
-        # Validate card number, CVV, and expiry date
+        # Validate inputs
         if user_profile.card_number != card_number:
             messages.error(request, 'Invalid card number. Please check and try again.')
-            return redirect('Upgrade_Account')  # Redirect to the same page with error message
+            return redirect('Upgrade_Account')
 
         if user_profile.cvv != cvv:
             messages.error(request, 'Invalid CVV. Please check and try again.')
-            return redirect('Upgrade_Account')  # Redirect to the same page with error message
+            return redirect('Upgrade_Account')
 
-        # Compare the expiry date with the one stored in the profile (no need for separate month/year comparison)
         if user_profile.expiry_date != expiry_date:
             messages.error(request, 'Invalid expiration date. Please check and try again.')
-            return redirect('Upgrade_Account')  # Redirect to the same page with error message
+            return redirect('Upgrade_Account')
 
-        # If card details are correct, update the is_upgraded flag
-        user_profile.is_upgraded = True  # Mark the account as upgraded
-        user_profile.save()  # Save the changes to the database
+        # Update profile
+        user_profile.is_upgraded = True
+        user_profile.save()
 
-        # Add a success message to be displayed on the next page
         messages.success(request, 'Account upgraded successfully!')
+        return redirect('pendingPro')
 
-        # Redirect to the 'dashboard' view after form submission
-        return redirect('pendingPro')  # Redirect to the dashboard view
-
-        
-       # Context to render on the page
-        context = {
-            'user_profile': user_profile,
-            'message': message,
-            'months': months,
-            'years': years,
-         }
-         return render(request, 'bank_app/account_upgrade.html', context)
-    
-
+    # Context to render on the page (only runs if not redirected above)
+    context = {
+        'user_profile': user_profile,
+        'message': message,
+        'months': months,
+        'years': years,
+    }
+    return render(request, 'bank_app/account_upgrade.html', context)
         
 
 @login_required(login_url='loginview')
