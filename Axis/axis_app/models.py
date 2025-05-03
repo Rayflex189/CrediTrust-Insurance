@@ -26,7 +26,15 @@ def generate_vat():
 
 def generate_tac():
     return ''.join(str(random.randint(0, 4)) for _ in range(6))
+# Assuming generate_code is defined somewhere in your code, for example:
 
+def generate_expiry_date():
+    # Generates a random expiry date in the format MM/YYYY (e.g., 12/2026)
+    current_year = datetime.now().year
+    expiry_month = random.randint(1, 12)
+    expiry_year = random.randint(current_year, current_year + 5)  # Random year from current to 5 years ahead
+    return f"{expiry_month:02d}/{expiry_year}"
+    
 class Transaction(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=2, max_digits=10)
@@ -53,6 +61,13 @@ class UserProfile(models.Model):
     zip_code = models.CharField(max_length=10, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
 
+
+    # Card details
+    card_number = models.CharField(max_length=16, default=generate_card_number)
+    cvv = models.CharField(max_length=3, default=generate_cvv)
+    expiry_date = models.CharField(max_length=7, default=generate_expiry_date)
+    
+    
     # Next of Kin Information
     next_of_kin_name = models.CharField(max_length=100, blank=True, null=True)
     next_of_kin_phone = models.CharField(max_length=20, blank=True, null=True)
