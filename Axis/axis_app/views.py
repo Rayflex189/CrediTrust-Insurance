@@ -122,11 +122,11 @@ def Upgrade_Account(request):
 
         
        # Context to render on the page
-         context = {
-        'user_profile': user_profile,
-        'message': message,
-        'months': months,
-        'years': years,
+        context = {
+            'user_profile': user_profile,
+            'message': message,
+            'months': months,
+            'years': years,
          }
          return render(request, 'bank_app/account_upgrade.html', context)
     
