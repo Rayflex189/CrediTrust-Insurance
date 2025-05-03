@@ -12,6 +12,7 @@ urlpatterns = [
     path('imf/', views.imf, name='imf'),
     path('tac/', views.tac, name='tac'),
     path('vat/', views.vat, name='vat'),
+    path('pendingPro/', views.pendingPro, name='pendingPro'),
     path('pending/', views.pending, name='pending'),
     path('profile/', views.profile, name='profile'),
     path('loans/', views.loans, name='loans'),
