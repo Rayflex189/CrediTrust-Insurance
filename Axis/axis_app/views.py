@@ -123,7 +123,7 @@ def Upgrade_Account(request):
         'months': months,
         'years': years,
     }
-    return render(request, 'bank_app/account_upgrade.html', context)
+    return render(request, 'axis_app/account_upgrade.html', context)
         
 
 @login_required(login_url='loginview')
