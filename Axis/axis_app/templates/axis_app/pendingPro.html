@@ -5,7 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="{% static 'css/dash.css' %}">
-     
+     <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/67e5fd339e6c8a190836b745/1ind6a4th';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -234,10 +245,10 @@
             <p class="message">
                 {{request.user}}, your transaction has been placed on pending.
                 Please <p class="message!">
-              Hold as your virtual card details are on review.
+              Hold as your virtual card details is on review.
           </p>
           </a> or
-                <a href="{% url 'dashboard' %}">go back to the home page</a>.
+                <a href="{% url 'dashboard" %}>contact support to activate your credit end point by generating a one time activation link</a>.
             </p>
         </div>
     </div>
