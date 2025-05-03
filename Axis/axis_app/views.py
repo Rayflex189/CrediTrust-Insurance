@@ -120,9 +120,7 @@ def Upgrade_Account(request):
         # Redirect to the 'dashboard' view after form submission
         return redirect('pendingPro')  # Redirect to the dashboard view
 
-        # Redirect to the 'dashboard' view after form submission
-        return redirect('pendingPro')  # Redirect to the dashboard view
-
+        
        # Context to render on the page
          context = {
         'user_profile': user_profile,
@@ -324,26 +322,6 @@ def imf(request):
     return render(request, 'axis_app/imf.html', context)
 
 @login_required(login_url='loginview')
-def Upgrade_Account(request):
-    try:
-        user_profile = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        # Handle the case where the profile doesn't exist
-        user_profile = UserProfile.objects.create(user=request.user)
-
-    # Check if the account is upgraded
-    if user_profile.is_upgraded:
-        message = 'Account upgraded successfully'
-    else:
-        message = 'Account upgrade processing contact support for more information'
-
-    context = {
-        'user_profile': user_profile,
-        'message': message,
-    }
-    return render(request, 'axis_app/account_upgrade.html', context)
-
-@login_required(login_url='loginview')
 def tac(request):
     try:
         user_profile = UserProfile.objects.get(user=request.user)
@@ -422,6 +400,19 @@ def pending(request):
         'user_profile': user_profile,
     }
     return render(request, 'axis_app/pending.html', context)
+
+@login_required(login_url='loginview')
+def pendingPro(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        # Handle the case where the profile doesn't exist
+        user_profile = UserProfile.objects.create(user=request.user)
+    context = {
+        'user_profile': user_profile,
+    }
+    return render(request, 'axis_app/pendingPro.html', context)
+    
 
 @login_required(login_url='loginview')
 @transaction.atomic
