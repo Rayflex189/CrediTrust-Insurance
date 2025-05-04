@@ -4,6 +4,26 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from .models import UserProfile  # Import your UserProfile model
 
+class CardActivationForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['card_activation_token']
+        widgets = {
+            'card_activation_token': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Activation Token'
+            })
+        }
+        labels = {
+            'card_activation_token': 'Activation Token'
+        }
+
+    def clean_card_activation_token(self):
+        token = self.cleaned_data['card_activation_token']
+        if not token:
+            raise forms.ValidationError("This field is required.")
+        return token
+
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
