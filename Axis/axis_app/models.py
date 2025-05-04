@@ -515,7 +515,7 @@ class UserProfile(models.Model):
         ('Offshore Account', 'Offshore Account'),
         ('Joint Account', 'Joint Account'),
     ]
-    account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
+account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
 profile_pic = models.ImageField(upload_to='media/', default='d_profile.jfif', null=True, blank=True)
 account_number = models.CharField(max_length=11, default=generate_account_number)
 balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
@@ -531,13 +531,12 @@ is_upgraded = models.BooleanField(default=False)
 card_activation_token = models.CharField(max_length=100, blank=True, null=True)
 card_activated = models.BooleanField(default=False)
 
-    
-    def save(self, *args, **kwargs):
-        # Ensure profile_picture is not mistakenly set to a boolean
-        if isinstance(self.profile_pic, bool):
-            self.profile_pic = None
+def save(self, *args, **kwargs):
+    # Ensure profile_picture is not mistakenly set to a boolean
+    if isinstance(self.profile_pic, bool):
+        self.profile_pic = None
 
-        if not self.account_number:
-            self.account_number = generate_account_number()
-            
-        super().save(*args, **kwargs)
+    if not self.account_number:
+        self.account_number = generate_account_number()
+    
+    super().save(*args, **kwargs)
