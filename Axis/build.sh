@@ -12,4 +12,5 @@ python manage.py collectstatic --no-input
 python manage.py makemigrations
 
 # Apply any outstanding database migrations
-python manage.py migrate
+# Use --fake if the column already exists to avoid duplicate migration error
+python manage.py migrate --fake axis_app
