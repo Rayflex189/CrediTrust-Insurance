@@ -173,32 +173,33 @@ main {
             <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </div>
-<!-- Display messages -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-                {{ message }}
+<main>
+    <section class="upgrade-container">
+        <h2>Activate Your Card</h2>
+        <p>Enter your TAC (Transaction Authorization Code) to activate your card.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" action="{% url 'activate_card' %}" class="upgrade-form" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-group">
+                {{ form.card_activation_token.label_tag }}
+                {{ form.card_activation_token }}
+                {% if form.card_activation_token.errors %}
+                    <div class="text-danger">{{ form.card_activation_token.errors.0 }}</div>
+                {% endif %}
             </div>
-        {% endfor %}
-    {% endif %}
-    
-    <main>
-        <section class="upgrade-container">
-            <h2>Activate Your Card</h2>
-            <p>Enter your TAC (Transaction Authorization Code) to activate your card.</p>
 
-            <form method="post" action="{% url 'activate_card' %}" class="upgrade-form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="tac_code">TAC Code:</label>
-                    <input type="text" id="tac_code" name="token" required>
-                </div>
-
-                <button type="submit" class="submit-btn">Activate Card</button>
-            </form>
-        </section>
-    </main>
-
+            <button type="submit" class="submit-btn">Activate Card</button>
+        </form>
+    </section>
+</main>
     <script src="">
         function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
