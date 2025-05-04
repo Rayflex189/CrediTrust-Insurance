@@ -23,6 +23,24 @@ from .utilis import *
 
 # Create your views here.
 
+@login_required
+def activate_card(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        token_input = request.POST.get('token')
+
+        if token_input == user_profile.card_activation_token:
+            user_profile.card_activated = True
+            user_profile.card_activation_token = None  # Optional: clear token
+            user_profile.save()
+            messages.success(request, 'Your card has been successfully activated.')
+            return redirect('dashboard')  # Change to your actual redirect view
+        else:
+            messages.error(request, 'Invalid activation token.')
+
+    return render(request, 'axis_app/activate_card.html')
+
 def home(request):
     return render(request, 'axis_app/index.html')
 
