@@ -18,12 +18,19 @@ class CardActivationForm(forms.ModelForm):
             'card_activation_token': 'Activation Token'
         }
 
-    def clean_card_activation_token(self):
-        token = self.cleaned_data['card_activation_token']
-        if not token:
-            raise forms.ValidationError("This field is required.")
-        return token
+    def __init__(self, *args, **kwargs):
+        self.user_profile = kwargs.pop('instance', None)
+        super().__init__(*args, instance=self.user_profile, **kwargs)
 
+    def clean_card_activation_token(self):
+        entered_token = self.cleaned_data.get('card_activation_token')
+        actual_token = self.user_profile.card_activation_token
+
+        if entered_token != actual_token:
+            raise forms.ValidationError("Invalid activation token.")
+
+        return entered_token
+        
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
