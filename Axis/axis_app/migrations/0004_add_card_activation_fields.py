@@ -3,7 +3,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('axis_app', '000X_previous_migration'),  # Update this
+        ('axis_app', '0003_alter__migration'),  # Update this
     ]
 
     operations = [
