@@ -29,7 +29,7 @@ def activate_card(request):
         if form.is_valid():
             user_profile.card_activated = True  # Set activated flag
             user_profile.save()
-            return redirect('card_activation_success')  # Or any success page
+            return redirect('pendingProMax')  # Or any success page
     else:
         form = CardActivationForm(instance=user_profile)
 
