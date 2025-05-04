@@ -20,24 +20,20 @@ from .forms import *
 from .models import *
 from .utilis import *
 
-@login_required
+@login_required(login_url='loginview')
 def activate_card(request):
-    user_profile = UserProfile.objects.get(user=request.user)
-    form = CardActivationForm(request.POST or None, instance=user_profile)
+    user_profile = request.user.userprofile  # Adjust this line if needed
 
     if request.method == 'POST':
+        form = CardActivationForm(request.POST, instance=user_profile)
         if form.is_valid():
-            token_input = form.cleaned_data['card_activation_token']
-            if token_input == user_profile.card_activation_token:
-                user_profile.card_activated = True
-                user_profile.card_activation_token = None  # Clear token
-                user_profile.save()
-                messages.success(request, 'Your card has been successfully activated.')
-                return redirect('pendingProMax')
-            else:
-                form.add_error('card_activation_token', 'Invalid activation token.')
+            user_profile.card_activated = True  # Set activated flag
+            user_profile.save()
+            return redirect('card_activation_success')  # Or any success page
+    else:
+        form = CardActivationForm(instance=user_profile)
 
-    return render(request, 'axis_app/activate_card.html', {'form': form})
+    return render(request, 'card_activation.html', {'form': form})
     
 def home(request):
     return render(request, 'axis_app/index.html')
