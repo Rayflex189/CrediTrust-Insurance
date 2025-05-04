@@ -173,7 +173,15 @@ main {
             <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </div>
-
+<!-- Display messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
     <main>
         <section class="upgrade-container">
             <h2>Activate Your Card</h2>
@@ -183,7 +191,7 @@ main {
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="tac_code">TAC Code:</label>
-                    <input type="text" id="tac_code" name="tac_code" required>
+                    <input type="text" id="tac_code" name="token" required>
                 </div>
 
                 <button type="submit" class="submit-btn">Activate Card</button>
