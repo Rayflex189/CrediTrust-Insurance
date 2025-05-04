@@ -40,7 +40,7 @@ def activate_card(request):
             messages.error(request, 'Invalid activation token.')
 
     return render(request, 'axis_app/activate_card.html')
-
+    
 def home(request):
     return render(request, 'axis_app/index.html')
 
