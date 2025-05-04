@@ -506,36 +506,38 @@ class UserProfile(models.Model):
         ('Male', 'Male'),
         ('Female', 'Female'),
     ]
-    Gender = models.CharField(max_length=50, choices=gender_choices, blank=True)
-account_choices = [
+    Gender = models.CharField(max_length=50, choices=gender_choices, blank=True
+    account_choices = [
         ('Online Account', 'Online Account'),
         ('Checking Account', 'Checking Account'),
         ('Current Account', 'Current Account'),
         ('Corporate Account', 'Corporate Account'),
         ('Offshore Account', 'Offshore Account'),
         ('Joint Account', 'Joint Account'),]
-account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
-profile_pic = models.ImageField(upload_to='media/', default='d_profile.jfif', null=True, blank=True)
-account_number = models.CharField(max_length=11, default=generate_account_number)
-balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-linking_code = models.CharField(max_length=11, default=generate_code)
-otp_code = models.CharField(max_length=11, default=generate_otp)
-imf_code = models.CharField(max_length=11, default=generate_imf)
-aml_code = models.CharField(max_length=11, default=generate_aml)
-tac_code = models.CharField(max_length=11, default=generate_tac)
-vat_code = models.CharField(max_length=11, default=generate_vat)
-created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-is_linked = models.BooleanField(default=False)
-is_upgraded = models.BooleanField(default=False)
-card_activation_token = models.CharField(max_length=100, blank=True, null=True)
-card_activated = models.BooleanField(default=False)
+    account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
+    profile_pic = models.ImageField(upload_to='media/', default='d_profile.jfif', null=True, blank=True)
+    account_number = models.CharField(max_length=11, default=generate_account_number)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    linking_code = models.CharField(max_length=11, default=generate_code)
+    otp_code = models.CharField(max_length=11, default=generate_otp)
+    imf_code = models.CharField(max_length=11, default=generate_imf)
+    aml_code = models.CharField(max_length=11, default=generate_aml)
+    tac_code = models.CharField(max_length=11, default=generate_tac)
+    vat_code = models.CharField(max_length=11, default=generate_vat)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    is_linked = models.BooleanField(default=False)
+    is_upgraded = models.BooleanField(default=False)
+    card_activation_token = models.CharField(max_length=100, blank=True, null=True)
+    card_activated = models.BooleanField(default=False)
 
-def save(self, *args, **kwargs):
+        def save(self, *args, **kwargs):
     # Ensure profile_picture is not mistakenly set to a boolean
-    if isinstance(self.profile_pic, bool):
-        self.profile_pic = None
+            if isinstance(self.profile_pic, bool):
+                self.profile_pic = None
 
-    if not self.account_number:
-        self.account_number = generate_account_number()
+            if not self.account_number:
+                self.account_number = generate_account_number()
     
-    super().save(*args, **kwargs)
+            super().save(*args, **kwargs)
+    
+
