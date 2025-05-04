@@ -506,7 +506,7 @@ class UserProfile(models.Model):
         ('Male', 'Male'),
         ('Female', 'Female'),
     ]
-    Gender = models.CharField(max_length=50, choices=gender_choices, blank=True
+    Gender = models.CharField(max_length=50, choices=gender_choices, blank=True)
     account_choices = [
         ('Online Account', 'Online Account'),
         ('Checking Account', 'Checking Account'),
