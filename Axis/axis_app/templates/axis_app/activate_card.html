@@ -7,10 +7,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrediTrust Insurance - Activate Card</title>
     <link rel="icon" href="{% static 'images/logos.webp' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+}
+
+header.premier-bank-header {
+    background-color: #004080;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo_box h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.icon_box a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+main {
+    padding: 2rem;
+    max-width: 600px;
+    margin: auto;
+}
+
+.upgrade-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.upgrade-container h2 {
+    margin-bottom: 1rem;
+}
+
+.upgrade-form .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.upgrade-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.upgrade-form input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-btn {
+    background-color: #004080;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: #003366;
+}
+
+.sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #004080;
+    color: white;
+    height: 100%;
+    width: 250px;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.sidebar ul li {
+    margin: 1rem 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.user-details {
+    margin-top: 1rem;
+}
+
+.telegram-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: #0088cc;
+    background: white;
+    border-radius: 50%;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    }
+    </style>
 </head>
 
 <body>
@@ -63,6 +192,15 @@
         </section>
     </main>
 
-    <script src="{% static 'js/script_dash.js' %}"></script>
+    <script src="">
+        function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar.style.display === "block") {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+    }
+        }
+    </script>
 </body>
 </html>
