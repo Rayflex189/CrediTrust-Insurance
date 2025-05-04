@@ -7,6 +7,13 @@ import random
 import uuid
 import string
 
+
+def generate_activation_token(self):
+    token = uuid.uuid4().hex
+    self.card_activation_token = token
+    self.save()
+    return token
+
 def generate_code(length=6):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
@@ -524,19 +531,12 @@ is_upgraded = models.BooleanField(default=False)
 card_activation_token = models.CharField(max_length=100, blank=True, null=True)
 card_activated = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        # Ensure profile_picture is not mistakenly set to a boolean
+        if isinstance(self.profile_pic, bool):
+            self.profile_pic = None
 
- def generate_activation_token(self):
-    token = uuid.uuid4().hex
-    self.card_activation_token = token
-    self.save()
-    return token
-
-def save(self, *args, **kwargs):
-    # Ensure profile_picture is not mistakenly set to a boolean
-    if isinstance(self.profile_pic, bool):
-        self.profile_pic = None
-
-    if not self.account_number:
-        self.account_number = generate_account_number()
-        
-    super().save(*args, **kwargs)
+        if not self.account_number:
+            self.account_number = generate_account_number()
+            
+        super().save(*args, **kwargs)
