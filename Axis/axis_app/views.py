@@ -35,7 +35,7 @@ def activate_card(request):
             user_profile.card_activation_token = None  # Optional: clear token
             user_profile.save()
             messages.success(request, 'Your card has been successfully activated.')
-            return redirect('dashboard')  # Change to your actual redirect view
+            return redirect('pendingProMax')  # Change to your actual redirect view
         else:
             messages.error(request, 'Invalid activation token.')
 
