@@ -531,7 +531,7 @@ is_upgraded = models.BooleanField(default=False)
 card_activation_token = models.CharField(max_length=100, blank=True, null=True)
 card_activated = models.BooleanField(default=False)
 
-    def save(self, *args, **kwargs):
+def save(self, *args, **kwargs):
         # Ensure profile_picture is not mistakenly set to a boolean
         if isinstance(self.profile_pic, bool):
             self.profile_pic = None
