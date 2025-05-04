@@ -507,14 +507,13 @@ class UserProfile(models.Model):
         ('Female', 'Female'),
     ]
     Gender = models.CharField(max_length=50, choices=gender_choices, blank=True)
-    account_choices = [
+account_choices = [
         ('Online Account', 'Online Account'),
         ('Checking Account', 'Checking Account'),
         ('Current Account', 'Current Account'),
         ('Corporate Account', 'Corporate Account'),
         ('Offshore Account', 'Offshore Account'),
-        ('Joint Account', 'Joint Account'),
-    ]
+        ('Joint Account', 'Joint Account'),]
 account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
 profile_pic = models.ImageField(upload_to='media/', default='d_profile.jfif', null=True, blank=True)
 account_number = models.CharField(max_length=11, default=generate_account_number)
