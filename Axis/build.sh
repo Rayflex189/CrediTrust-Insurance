@@ -13,4 +13,4 @@ python manage.py makemigrations
 
 # Apply any outstanding database migrations
 # Use --fake if the column already exists to avoid duplicate migration error
-python manage.py migrate --fake axis_app
+python manage.py migrate axis_app
