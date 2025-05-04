@@ -529,15 +529,13 @@ class UserProfile(models.Model):
     is_upgraded = models.BooleanField(default=False)
     card_activation_token = models.CharField(max_length=100, blank=True, null=True)
     card_activated = models.BooleanField(default=False)
-
-        def save(self, *args, **kwargs):
+    
+    def save(self, *args, **kwargs):
     # Ensure profile_picture is not mistakenly set to a boolean
-            if isinstance(self.profile_pic, bool):
-                self.profile_pic = None
+        if isinstance(self.profile_pic, bool):
+           self.profile_pic = None
 
-            if not self.account_number:
-                self.account_number = generate_account_number()
-    
-            super().save(*args, **kwargs)
-    
+        if not self.account_number:
+           self.account_number = generate_account_number()
 
+        super().save(*args, **kwargs)
