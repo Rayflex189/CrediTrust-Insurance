@@ -521,8 +521,8 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     is_linked = models.BooleanField(default=False)
     is_upgraded = models.BooleanField(default=False)
-card_activation_token = models.CharField(max_length=100, blank=True, null=True)
-    card_activated = models.BooleanField(default=False)
+    card_activation_token = models.CharField(max_length=100, blank=True, null=True)
+   card_activated = models.BooleanField(default=False)
 
     def generate_activation_token(self):
         token = uuid.uuid4().hex
