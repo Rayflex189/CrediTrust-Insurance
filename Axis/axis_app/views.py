@@ -33,7 +33,7 @@ def activate_card(request):
     else:
         form = CardActivationForm(instance=user_profile)
 
-    return render(request, 'card_activation.html', {'form': form})
+    return render(request, 'axis_app/activate_card.html', {'form': form})
     
 def home(request):
     return render(request, 'axis_app/index.html')
