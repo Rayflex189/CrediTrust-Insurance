@@ -49,7 +49,19 @@ def pendingProMax(request):
         'user_profile': user_profile,
     }
     return render(request, 'axis_app/pendingProMax.html', context)
-    
+
+@login_required(login_url='loginview')
+def account_frozen_page(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        # Handle the case where the profile doesn't exist
+        user_profile = UserProfile.objects.create(user=request.user)
+    context = {
+        'user_profile': user_profile,
+    }
+    return render(request, 'axis_app/account_frozen_page.html', context)
+                
 
 @login_required(login_url='loginview')
 def analytics(request):
