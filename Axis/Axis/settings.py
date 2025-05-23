@@ -14,20 +14,14 @@ from pathlib import Path
 import os
 import dj_database_url
 
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'creditrust_database',
-        'USER': 'creditrust_database_user',
-        'PASSWORD': 'NeYLLwLtDGtNN4oaYoZis6w5clSgDdZH',
-        'HOST': 'dpg-cv73pjdumphs738eaop0-a.oregon-postgres.render.com',  # Check this
-        'PORT': '5432',
-    },
-     'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
