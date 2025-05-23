@@ -18,21 +18,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'YOUR_PASSWORD',
-        'HOST': 'creditrust-insurance-db.flycast',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'USER': 'postgres.vqwosrkfwkfoohdddhcm',
+        'PASSWORD': 'dG4*Hz+Kew?aHE7',
+        'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
+        'PORT': '6543',  # PgBouncer port
+        'CONN_MAX_AGE': 0,  # Required for PgBouncer compatibility
     }
 }
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
