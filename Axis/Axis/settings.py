@@ -124,7 +124,6 @@ if not DEBUG:
     # Use WhiteNoise storage for production
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Additional locations of static files
 STATICFILES_DIRS = [
