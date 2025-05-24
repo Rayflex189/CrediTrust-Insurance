@@ -1,10 +1,10 @@
-# Use official Python image
+# Use official slim Python image
 FROM python:3.11-slim
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV PIP_ROOT_USER_ACTION=ignore
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_ROOT_USER_ACTION=ignore
 
 # Set working directory
 WORKDIR /app
@@ -13,25 +13,29 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
 COPY Axis/requirements.txt .
-
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
-# Copy full Django project
+# Copy the full Django project
 COPY Axis/ .
 
-# Collect static at build time
+# Collect static files at build time
 RUN python manage.py collectstatic --no-input
 
-# Avoid running makemigrations and migrate at build-time (do it at runtime or entrypoint)
-# Don't run create_admin at build time — it's likely interactive or DB-dependent
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Expose port
+# Expose the port Django will run on
 EXPOSE 8000
 
-# Start server with Gunicorn
+# Set entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Start Gunicorn server
 CMD ["gunicorn", "Axis.wsgi:application", "--bind", "0.0.0.0:8000"]
