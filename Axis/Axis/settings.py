@@ -42,7 +42,10 @@ SECRET_KEY = 'django-insecure-^)hb2(8rnlh=4s19#m0%@35)-87w#h5y(*s=(a1w%=xzh=@z%l
 DEBUG = False
 
 ALLOWED_HOSTS = ['creditrust-insurance.fly.dev']
-
+CSRF_TRUSTED_ORIGINS = ['https://creditrust-insurance.fly.dev']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
@@ -69,11 +72,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Axis.urls'
-
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://creditrust-insurance.fly.dev",
-]
 
 TEMPLATES = [
     {
