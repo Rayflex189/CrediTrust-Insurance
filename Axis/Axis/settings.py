@@ -72,7 +72,7 @@ ROOT_URLCONF = 'Axis.urls'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://creditrust-insurance.fly.dev/",
+    "https://creditrust-insurance.fly.dev",
 ]
 
 TEMPLATES = [
