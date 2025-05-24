@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PIP_ROOT_USER_ACTION=ignore
 
 # Set working directory
-WORKDIR Axis/app
+WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -17,19 +17,21 @@ RUN apt-get update && apt-get install -y \
 
 # Copy requirements and install Python dependencies
 COPY Axis/requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy the full Django project
-COPY Axsi/ /app/
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt
 
-# Run Django setup commands
+# Copy full Django project
+COPY Axis/ .
+
+# Collect static at build time
 RUN python manage.py collectstatic --no-input
-RUN python manage.py makemigrations
-RUN python manage.py migrate
-RUN python manage.py create_admin
+
+# Avoid running makemigrations and migrate at build-time (do it at runtime or entrypoint)
+# Don't run create_admin at build time — it's likely interactive or DB-dependent
 
 # Expose port
 EXPOSE 8000
 
-# Start server
+# Start server with Gunicorn
 CMD ["gunicorn", "Axis.wsgi:application", "--bind", "0.0.0.0:8000"]
