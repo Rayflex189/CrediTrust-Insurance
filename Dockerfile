@@ -32,10 +32,10 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Expose the port Django will run on
-EXPOSE 8000
+EXPOSE 8080
 
 # Set entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Start Gunicorn server
-CMD ["gunicorn", "Axis.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "Axis.wsgi:application", "--bind", "0.0.0.0:8080"]
