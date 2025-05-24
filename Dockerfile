@@ -16,11 +16,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
-COPY Axis/requirements.txt .
+COPY /requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy the full Django project
-COPY Axis/ /app/
+COPY /app/
 
 # Run Django setup commands
 RUN python manage.py collectstatic --no-input
