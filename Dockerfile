@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PIP_ROOT_USER_ACTION=ignore
 
 # Set working directory
-WORKDIR /app
+WORKDIR Axis/app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,11 +16,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
-COPY /requirements.txt .
+COPY Axis/requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy the full Django project
-COPY /app/
+COPY Axsi/ /app/
 
 # Run Django setup commands
 RUN python manage.py collectstatic --no-input
