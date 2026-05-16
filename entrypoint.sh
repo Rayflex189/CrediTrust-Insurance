@@ -3,13 +3,11 @@
 # Exit on error
 set -o errexit
 
-# Run database migrations
-python manage.py migrate
+echo "Running database migrations..."
+python manage.py migrate --no-input
 
-# Create admin user if custom command exists
-if python manage.py help | grep -q "create_admin"; then
-    python manage.py create_admin
-fi
+echo "Collecting static files..."
+python manage.py collectstatic --no-input
 
-# Run the main container command (Gunicorn)
-exec "$@"
+echo "Starting Gunicorn..."
+exec gunicorn Axis.wsgi:application --bind 0.0.0.0:8080
