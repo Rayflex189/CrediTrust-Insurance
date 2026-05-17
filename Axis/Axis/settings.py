@@ -41,7 +41,12 @@ SECRET_KEY = 'django-insecure-^)hb2(8rnlh=4s19#m0%@35)-87w#h5y(*s=(a1w%=xzh=@z%l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['creditrust-insurance.fly.dev']
+# Allow Render's domain
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.onrender.com',  # Allows any Render subdomain
+]
 CSRF_TRUSTED_ORIGINS = ['https://creditrust-insurance.fly.dev']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
