@@ -18,7 +18,7 @@ var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
-s1.src='https://embed.tawk.to/67e5fd339e6c8a190836b745/1ind6a4th';
+s1.src='https://embed.tawk.to/6a09f6a0e57a6a1c342a5445/1jorempt4';
 s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
@@ -888,21 +888,39 @@ opacity: 1;
 }
 }
 
+/* Account number styling */
+.account-number {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+}
 
+.account-number span {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.account-info {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius-sm);
+    backdrop-filter: blur(4px);
+}
+
+/* Make copy icon more touch-friendly on mobile */
+@media (max-width: 768px) {
+    .copy-icon {
+        padding: 0.25rem;
+        font-size: 1rem;
+    }
+	}
 </style>
 </head>
-	<script type="text/javascript">
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = 'c0a3839505674cf7ec26a7cfcb4c7d76bf5e48af';
-window.smartsupp||(function(d) {
-	var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-	s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-	c.type='text/javascript';c.charset='utf-8';c.async=true;
-	c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-	</script>
+
 <body>
-       <a href="https://t.me/CREDITRUST_Customersupport" class="telegram-icon" target="_blank">
+       <a href="https://t.me/CUSTOMER_SUPPORT_1485" class="telegram-icon" target="_blank">
         <i class="fab fa-telegram"></i>
        </a>
     
@@ -968,16 +986,13 @@ window.smartsupp||(function(d) {
                     <h3> {{user_profile.currency}} {{user_profile.balance|intcomma}}</h3>
                 </div>    
             </div>
-            <div class="withdraw_min">
-                <div class="item1">
-                    <span>
-                       Account Number
-                    </span>
-                </div>
-                <div class="item2">
-                    <h2> {{user_profile.account_number}}</h2>
-                </div>
-                </div>
+                   <div class="account-info" style="text-align: right;">
+            <small style="opacity: 0.8; font-size: 0.7rem;">Account Number</small>
+            <div>
+                <span id="mainAccountNumber" style="font-weight: 600; letter-spacing: 1px;">{{ user_profile.account_number|default:"Not available" }}</span>
+                <i class="fas fa-copy copy-icon" onclick="copyMainAccountNumber()" style="cursor: pointer; margin-left: 8px; color: #fff; font-size: 0.8rem;"></i>
+			</div>
+				   </div>
             <br><br><br>
             <!-- Add deposit and transfer divs -->
             <a href="" style="text-decoration: none;" id="myLink" class="deposit">
@@ -1330,4 +1345,28 @@ window.smartsupp||(function(d) {
     </div>
 </div>
 <script src="{% static 'js/script_dash.js' %}"></script>
+<script>
+	function copyMainAccountNumber() {
+    const accountNumberSpan = document.getElementById('mainAccountNumber');
+    const accountNumber = accountNumberSpan.innerText;
+    
+    if (accountNumber && accountNumber !== "Not available") {
+        navigator.clipboard.writeText(accountNumber).then(() => {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'copy-tooltip';
+            tooltip.innerText = 'Copied!';
+            document.body.appendChild(tooltip);
+            
+            const icon = event.target;
+            const rect = icon.getBoundingClientRect();
+            tooltip.style.left = rect.left - 20 + 'px';
+            tooltip.style.top = rect.top - 30 + 'px';
+            
+            setTimeout(() => {
+                tooltip.remove();
+            }, 1500);
+        });
+    }
+	}
+</script>
 </body>
