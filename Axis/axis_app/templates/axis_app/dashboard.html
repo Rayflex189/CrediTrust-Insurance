@@ -1,0 +1,955 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard for managing account and transactions.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>CrediTrust Insurance Bank</title>
+    <meta name="theme-color" content="#295f6c">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/6a09f6a0e57a6a1c342a5445/1jorempt4';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <link rel="icon" href="{% static 'images/logos.webp' %}" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* ---------- PROFESSIONAL REDESIGN (preserving all classes/IDs/elements) ---------- */
+        .transaction-credit { color: #10b981; font-weight: 500; }
+        .transaction-debit { color: #ef4444; font-weight: 500; }
+        :root {
+            --primary-color: #295f6c;
+            --secondary-color: #0a039c;
+            --highlight-color: #b28d07;
+            --rare-color: #798487;
+            --container-bg-color: #fdfdfd;
+            --hero-font: "Inter", system-ui;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+        }
+
+        /* Telegram icon */
+        .telegram-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #0088cc;
+            color: white;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease, background 0.2s;
+            z-index: 999;
+        }
+        .telegram-icon:hover {
+            transform: scale(1.1);
+            background-color: #006699;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            display: none;
+        }
+        .loader {
+            width: fit-content;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 30px;
+            background: radial-gradient(circle closest-side, #000 94%, #0000) right/calc(200% - 1em) 100%;
+            animation: l24 1s infinite alternate linear;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        .loader::before {
+            content: "Loading...";
+            line-height: 1em;
+            color: #0000;
+            background: inherit;
+            background-image: radial-gradient(circle closest-side, #fff 94%, #000);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        html, body {
+            font-family: var(--hero-font);
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            color: #1e2a3e;
+            overflow-x: hidden;
+            background-color: #f4f7fc;
+            line-height: 1.5;
+        }
+        .premier-bank-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+        .premier-bank-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            padding-left: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .icon_links {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.85);
+            transition: color 0.2s;
+        }
+        .icon_links:hover { color: white; }
+        .logo_box, .icon_box { display: flex; align-items: center; }
+        .icon_box { gap: 1rem; margin: 0.5rem; }
+        .open-sidebar-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 0.6rem 1rem;
+            width: auto;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .open-sidebar-btn:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            right: -280px;
+            top: 0;
+            width: 280px;
+            height: 100%;
+            background-color: white;
+            color: #1f2a3e;
+            transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: 1000;
+            box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.open { right: 0; }
+        .sidebar-header {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            text-align: right;
+        }
+        .sidebar-header .close-sidebar {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            transition: background 0.2s;
+        }
+        .sidebar-header .close-sidebar:hover { background: rgba(255, 255, 255, 0.3); }
+        .user-details {
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .user-details p { margin: 0.5rem 0; font-size: 0.9rem; }
+        .user-details button {
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background-color: var(--highlight-color);
+            border: none;
+            border-radius: 2rem;
+            cursor: pointer;
+            color: #1e293b;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .user-details button:hover {
+            background-color: #9a7806;
+            transform: translateY(-1px);
+        }
+        .account-number {
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+        .sidebar ul li {
+            padding: 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .sidebar ul li a {
+            color: #1e293b;
+            text-decoration: none;
+            display: block;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #eef2ff;
+            color: var(--primary-color);
+            padding-left: 1.75rem;
+        }
+        .dropbtn {
+            background-color: transparent;
+            color: #1e293b;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            transition: background 0.2s;
+        }
+        .dropbtn:hover {
+            background-color: #eef2ff;
+            color: var(--primary-color);
+        }
+        .dropdown-content {
+            display: none;
+            position: relative;
+            background-color: #f9f9ff;
+            min-width: 100%;
+            box-shadow: none;
+            z-index: 1;
+            animation: slideDown 0.25s ease;
+        }
+        .dropdown-content a, .dropdown-content .close-navbar {
+            color: #334155;
+            padding: 0.6rem 1.5rem 0.6rem 2.5rem;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover, .dropdown-content .close-navbar:hover {
+            background-color: #e0e7ff;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .close-navbar {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* DASHBOARD CARD */
+        .item1, .item2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            line-height: 1.4;
+        }
+        .box1 {
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            margin: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+        .inner_deeper {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0.5rem 0;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .withdraw, .withdraw_min {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .part2 {
+            width: 2.5rem;
+            background: linear-gradient(135deg, #0f172a, var(--highlight-color));
+            border-radius: 1rem;
+            font-size: 1.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.5rem;
+        }
+        .deposit, .transfer {
+            position: absolute;
+            width: 40%;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            background-color: white;
+            color: #1e293b;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .deposit { bottom: -60px; left: 20px; }
+        .transfer { bottom: -60px; right: 20px; }
+        .deposit:hover, .transfer:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .custom_dp {
+            width: 100%;
+            background-color: var(--highlight-color);
+            border: none;
+            padding: 0.6rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .custom_dp:hover {
+            background-color: #9a7806;
+            transform: scale(1.02);
+        }
+        .custom_active {
+            background-color: var(--highlight-color);
+            margin: 0 auto;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+        }
+        .custom_tf {
+            width: 100%;
+            background-color: #2563eb;
+            border: none;
+            padding: 0.6rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .custom_tf:hover {
+            background-color: #1d4ed8;
+            transform: scale(1.02);
+        }
+        .deposit .fa-arrow-down, .transfer .fa-arrow-up { margin-left: 0; }
+        .profile-img {
+            width: 4rem;
+            height: 4rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .part1 { display: flex; align-items: center; justify-content: center; }
+        .Welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .fa-plus {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.8rem;
+            margin-top: 0;
+            margin-bottom: 0;
+            border-radius: 1rem;
+            background: rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .fa-plus:hover { background: rgba(0,0,0,0.3); }
+
+        /* TABLE */
+        .table-box {
+            background-color: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+            margin: 1.5rem;
+        }
+        .table-responsive { overflow-x: auto; }
+        .table-box h2 {
+            margin-bottom: 0;
+            padding: 1rem 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eef2f6;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 1rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fafcff;
+        }
+
+        /* POPUPS */
+        .payment-popup, .info-popup, .crypto-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .popup-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        .close-popup {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: #f1f5f9;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #475569;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-popup:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .payment-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: #f8fafc;
+            border-radius: var(--radius-md);
+            width: auto;
+            box-shadow: none;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+        .payment-option i {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .payment-option span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        @keyframes bounceIn {
+            from { transform: scale(0.96); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes shrinkOut {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0.96); opacity: 0; visibility: hidden; }
+        }
+        .payment-popup.show, .info-popup.show, .crypto-popup.show {
+            display: flex;
+            animation: bounceIn 0.2s ease-out;
+        }
+        .payment-popup.hide, .info-popup.hide, .crypto-popup.hide {
+            animation: shrinkOut 0.2s ease-out forwards;
+        }
+        h2 { color: var(--primary-color); font-weight: 600; }
+        .info-text { color: #334155; line-height: 1.6; text-align: left; }
+        .green { color: #10b981; font-weight: 500; }
+        .red { color: #ef4444; font-weight: 500; }
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background-color: white;
+        }
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(41, 95, 108, 0.1);
+            animation: none;
+        }
+        .errors {
+            color: #dc2626;
+            background-color: #fee2e2;
+            padding: 0.75rem;
+            border: 1px solid #fecaca;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            animation: vibrate 0.3s ease;
+        }
+        @keyframes vibrate {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .account-number {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            font-size: 0.85rem;
+        }
+        .account-number span { font-weight: 600; letter-spacing: 0.5px; }
+        .account-info {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            backdrop-filter: blur(4px);
+        }
+        .copy-tooltip {
+            position: fixed;
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 2000;
+            pointer-events: none;
+            animation: fadeOut 1.5s forwards;
+            box-shadow: var(--shadow-md);
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            70% { opacity: 0.8; transform: translateY(-5px); }
+            100% { opacity: 0; transform: translateY(-10px); visibility: hidden; }
+        }
+        @media (max-width: 768px) {
+            .box1 { margin: 1rem; padding: 1rem; }
+            .deposit, .transfer { width: 44%; bottom: -50px; }
+            .inner_deeper { gap: 0.75rem; }
+            .profile-img { width: 3rem; height: 3rem; }
+            .premier-bank-header h1 { font-size: 1.2rem; }
+            .open-sidebar-btn { padding: 0.4rem 0.75rem; font-size: 0.9rem; }
+            .table th, .table td { padding: 0.5rem; font-size: 0.8rem; }
+            .copy-icon { padding: 0.25rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://t.me/CUSTOMER_SUPPORT_1485" class="telegram-icon" target="_blank">
+        <i class="fab fa-telegram"></i>
+    </a>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{% if message.tags %}{{ message.tags }}{% endif %}" style="--index: {{ forloop.counter }}">
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <header class="premier-bank-header">
+        <div class="logo_box">
+            <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776;</button>
+            <h1>Dashboard</h1>
+        </div>
+        <div class="icon_box">
+            <a class="icon_links" href="https://www.smartsupp.com">
+                <div class="notification-bell" id="open-chat"><i class="fas fa-comments"></i></div>
+            </a>
+            <a class="icon_links" href="#bell">
+                <div class="notification-bell" onclick="vibrateBell()"><i class="fas fa-bell"></i></div>
+            </a>
+            <a class="icon_links" href="{% url 'reset_profile' %}">
+                <div class="notification-bell" onclick="vibrateBell()"><i class="fas fa-cogs"></i></div>
+            </a>
+        </div>
+    </header>
+
+    <div class="box1">
+        <div style="display: flex; justify-content: space-between;">
+            <div class="part1">
+                <div class="Welcome">
+                    <p>{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+                    <img src="{% static 'images/d_profile.jfif' %}" class="profile-img" alt="Default Profile Picture">
+                </div>
+            </div>
+            <i class="fas fa-plus"></i>
+        </div>
+        <hr>
+        <div class="withdraw">
+            <div class="item1"><span>Total Balance</span></div>
+            <div class="item2"><h3>{{ user_profile.currency }} {{ user_profile.balance|intcomma }}</h3></div>
+        </div>
+        <div class="account-info" style="text-align: right;">
+            <small style="opacity: 0.8; font-size: 0.7rem;">Account Number</small>
+            <div>
+                <span id="mainAccountNumber" style="font-weight: 600; letter-spacing: 1px;">{{ user_profile.account_number|default:"Not available" }}</span>
+                <i class="fas fa-copy copy-icon" onclick="copyMainAccountNumber()" style="cursor: pointer; margin-left: 8px; color: #fff; font-size: 0.8rem;"></i>
+            </div>
+        </div>
+        <br><br><br>
+        <a href="" style="text-decoration: none;" id="myLink" class="deposit">
+            <div class="inner_deeper">
+                <span>Deposit</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+            </div>
+            <button type="button" class="btn btn-primary custom_dp">Deposit</button>
+        </a>
+        <div class="transfer">
+            <div class="inner_deeper">
+                <span>Transfer</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z"/></svg>
+            </div>
+            <button type="button" class="btn btn-primary custom_tf">Transfer</button>
+        </div>
+    </div>
+    <br><br><br>
+    <center><button type="button" class="btn btn-primary custom_active">ACTIVE</button></center>
+
+    <!-- Main Payment Options Popup -->
+    <div id="paymentPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="togglePaymentPopup()">&times;</button>
+            <h2>Choose Payment Option</h2>
+            <div class="payment-options">
+                <div class="payment-option" onclick="showPaymentForm('paypalPopup')"><i class="fab fa-paypal"></i><span>PayPal</span></div>
+                <div class="payment-option" onclick="showPaymentForm('zellePopup')"><i class="fab fa-cc-diners-club"></i><span>Zelle</span></div>
+                <div class="payment-option" onclick="showPaymentForm('venmoPopup')"><i class="fas fa-wallet"></i><span>CashApp</span></div>
+                <div class="payment-option" onclick="showPaymentForm('applePayPopup')"><i class="fab fa-apple"></i><span>Apple Pay</span></div>
+                <div class="payment-option" onclick="showPaymentForm('googlePayPopup')"><i class="fab fa-google-pay"></i><span>Google Pay</span></div>
+                <div class="payment-option" onclick="showPaymentForm('amazonPayPopup')"><i class="fab fa-bitcoin"></i><span>Crypto Pay</span></div>
+                <a href="{% url 'bank_transfer' %}"><div class="payment-option"><i class="fas fa-university"></i><span>Bank Transfer</span></div></a>
+                <a href="{% url 'skrill' %}"><div class="payment-option"><i class="fas fa-wallet"></i><span>Skrill Payment</span></div></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PayPal Popup -->
+    <div id="paypalPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentForm('paypalPopup')">&times;</button>
+            <h2>PayPal Method</h2><br>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Email">
+                    <label>Amount</label><br>
+                    {{ form.amount }}
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer to Paypal</button><br><br>
+                <div class="errors">{{ form.errors }}</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Zelle Popup -->
+    <div id="zellePopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentForm('zellePopup')">&times;</button>
+            <h2>Zelle Method</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Email">
+                    <label>Amount</label><br>
+                    {{ form.amount }}
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer to Zelle</button><br><br>
+                <div class="errors">{{ form.errors }}</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Venmo/CashApp Popup -->
+    <div id="venmoPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentForm('venmoPopup')">&times;</button>
+            <h2>Cash App</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Email">
+                    <label>Amount</label><br>
+                    {{ form.amount }}
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer to Cash App</button><br><br>
+                <div class="errors">{{ form.errors }}</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Apple Pay Popup -->
+    <div id="applePayPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentForm('applePayPopup')">&times;</button>
+            <h2>Apple Pay Payment</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Account Number">
+                    <label>Amount</label><br>
+                    {{ form.amount }}
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer to Apple Pay</button><br><br>
+                <div class="errors">{{ form.errors }}</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Google Pay Popup -->
+    <div id="googlePayPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentForm('googlePayPopup')">&times;</button>
+            <h2>Google Pay Payment</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Account ID">
+                    <label>Amount</label><br>
+                    {{ form.amount }}
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer to Google Pay</button><br><br>
+                <div class="errors">{{ form.errors }}</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Crypto Pay Popup -->
+    <div id="amazonPayPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentForm('amazonPayPopup')">&times;</button>
+            <h2>Crypto Pay Payment</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Amount</label><br>
+                    {{ form.amount }}
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="walletAddress" placeholder="Enter Wallet Address">
+                    <label>Wallet Address</label>
+                </div>
+                <div class="form-group">
+                    <label>Network Type</label>
+                    <select class="form-control" disabled><option selected>TRC-20</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Select Cryptocurrency</label>
+                    <select class="form-control" name="crypto_currency">
+                        <option value="BTC">Bitcoin (BTC)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="USDT">Tether (USDT)</option>
+                        <option value="BNB">Binance Coin (BNB)</option>
+                        <option value="XRP">Ripple (XRP)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Transfer to Crypto Pay</button><br><br>
+                <div class="errors">{{ form.errors }}</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Success Popup -->
+    <div id="paymentSuccessPopup" class="payment-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="hidePaymentSuccessPopup()">&times;</button>
+            <h2>Payment Successful</h2>
+            <p>Your payment has been successfully processed. You will be redirected shortly.</p>
+        </div>
+    </div>
+
+    <!-- Info Popup -->
+    <div id="infoPopup" class="info-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="toggleInfoPopup()">&times;</button>
+            <h2>Welcome to CTBANK!</h2>
+            <p class="info-text">
+                To make a deposit, please follow these easy steps:<br><br>
+                <strong>1. Tap the "Support" Button</strong><br>
+                For traditional bank deposits, tap on the "Support" button to initiate a deposit. Our friendly team will guide you through the process and ensure your deposit is handled efficiently.<br><br>
+                If you need any assistance or have questions, don't hesitate to reach out through the "Support" feature. We're here to help!<br><br>
+                Thank you for banking with us.
+            </p>
+        </div>
+    </div>
+
+    <!-- Crypto Deposit Popup -->
+    <div id="cryptoPopup" class="crypto-popup">
+        <div class="popup-content">
+            <button class="close-popup" onclick="toggleCryptoPopup()">&times;</button>
+            <h2>Crypto Deposit Instructions</h2>
+            <div class="crypto-addresses">
+                <div class="address"><h4>Bitcoin</h4><p>Not Available</p></div>
+                <div class="address"><h4>Ethereum</h4><p>Not Available</p></div>
+                <div class="address"><h4>Litecoin</h4><p>Not Available</p></div>
+            </div>
+            <div class="alert alert-warning">Send the support a screenshot of your pop when done and payment is done according to payment description.</div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">Username: <span>{{ request.user }}</span></p>
+            <p class="user-email">Email: <span>{{ user_profile.email }}</span></p>
+        </div>
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li>
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'Upgrade_Account' %}">Upgrade Account</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div></div></li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="container mt-5" id="bell">
+        <div class="table-box bg-lightblue p-3">
+            <h2 class="text-center">Recent Transactions</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>S/N</th><th>Amount</th><th>Balance After</th><th>Description</th><th>Timestamp</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr class="{% if transaction.description == 'Credit' %}transaction-credit{% else %}transaction-debit{% endif %}">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.balance_after }}</td>
+                            <td>{{ transaction.description }}</td>
+                            <td>{{ transaction.timestamp|date:"M d, Y H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="5">No recent transactions.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/script_dash.js' %}"></script>
+    <script>
+        function copyMainAccountNumber() {
+            const accountNumberSpan = document.getElementById('mainAccountNumber');
+            const accountNumber = accountNumberSpan.innerText;
+            if (accountNumber && accountNumber !== "Not available") {
+                navigator.clipboard.writeText(accountNumber).then(() => {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'copy-tooltip';
+                    tooltip.innerText = 'Copied!';
+                    document.body.appendChild(tooltip);
+                    const icon = event.target;
+                    const rect = icon.getBoundingClientRect();
+                    tooltip.style.left = rect.left - 20 + 'px';
+                    tooltip.style.top = rect.top - 30 + 'px';
+                    setTimeout(() => tooltip.remove(), 1500);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
