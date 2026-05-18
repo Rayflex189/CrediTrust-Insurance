@@ -2,18 +2,22 @@
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const openBtn = document.getElementById('openSidebarBtn');
+    if (!sidebar || !openBtn) return;
+
     if (sidebar.classList.contains('open')) {
         sidebar.classList.remove('open');
-        openBtn.style.display = 'block'; // Show the open button
+        openBtn.style.display = 'block';
     } else {
         sidebar.classList.add('open');
-        openBtn.style.display = 'none'; // Hide the open button
+        openBtn.style.display = 'none';
     }
 }
 
-// Function to toggle the payment popup visibility
+// Global toggle for main payment popup (single definition, no duplicate)
 function togglePaymentPopup() {
     const popup = document.getElementById('paymentPopup');
+    if (!popup) return;
+
     if (popup.classList.contains('show')) {
         popup.classList.remove('show');
         popup.classList.add('hide');
@@ -23,24 +27,31 @@ function togglePaymentPopup() {
     }
 }
 
-// Add event listener to Transfer button
-document.querySelector('.custom_tf').addEventListener('click', () => {
-    togglePaymentPopup();
-});
+// Transfer button event (preserved)
+const transferBtn = document.querySelector('.custom_tf');
+if (transferBtn) {
+    transferBtn.addEventListener('click', () => {
+        togglePaymentPopup();
+    });
+}
 
-document.getElementById('myLink').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevents the default action (navigation)
-    // Your custom logic here
-});
+// Deposit link (myLink) – prevent default navigation
+const depositLink = document.getElementById('myLink');
+if (depositLink) {
+    depositLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        // Your custom logic here (if any)
+    });
+}
 
-
-// Function to toggle the info popup visibility
+// Toggle info popup (deposit instructions)
 function toggleInfoPopup() {
     const popup = document.getElementById('infoPopup');
+    if (!popup) return;
+
     if (popup.classList.contains('show')) {
         popup.classList.remove('show');
         popup.classList.add('hide');
-        // After the animation ends, hide the popup completely
         popup.addEventListener('animationend', () => {
             popup.style.display = 'none';
         }, { once: true });
@@ -51,18 +62,22 @@ function toggleInfoPopup() {
     }
 }
 
-// Add event listener to Deposit button
-document.querySelector('.custom_dp').addEventListener('click', () => {
-    toggleInfoPopup();
-});
+// Deposit button event
+const depositBtn = document.querySelector('.custom_dp');
+if (depositBtn) {
+    depositBtn.addEventListener('click', () => {
+        toggleInfoPopup();
+    });
+}
 
-// Function to toggle the crypto popup visibility
+// Toggle crypto popup
 function toggleCryptoPopup() {
     const popup = document.getElementById('cryptoPopup');
+    if (!popup) return;
+
     if (popup.classList.contains('show')) {
         popup.classList.remove('show');
         popup.classList.add('hide');
-        // After the animation ends, hide the popup completely
         popup.addEventListener('animationend', () => {
             popup.style.display = 'none';
         }, { once: true });
@@ -73,48 +88,52 @@ function toggleCryptoPopup() {
     }
 }
 
-// Add event listener to Add icon or button
-document.querySelector('.fa-plus').addEventListener('click', () => {
-    toggleCryptoPopup();
-});
-
-// Toggle payment options popup
-function togglePaymentPopup() {
-    const popup = document.getElementById('paymentPopup');
-    popup.classList.toggle('show');
+// Add icon (fa-plus) events – originally toggles crypto popup,
+// but later also toggles payment popup. Preserving both.
+const plusIcon = document.querySelector('.fa-plus');
+if (plusIcon) {
+    plusIcon.addEventListener('click', () => {
+        toggleCryptoPopup();
+    });
 }
 
-// Show specific payment form
+// Show specific payment form (PayPal, Zelle, etc.)
 function showPaymentForm(formId) {
     const paymentPopup = document.getElementById('paymentPopup');
     const specificPopup = document.getElementById(formId);
+    if (!paymentPopup || !specificPopup) return;
+
     paymentPopup.classList.remove('show');
     paymentPopup.classList.add('hide');
     specificPopup.style.display = 'flex';
     specificPopup.classList.add('show');
 }
 
-// Hide specific payment form
+// Hide specific payment form and return to main payment popup
 function hidePaymentForm(formId) {
     const specificPopup = document.getElementById(formId);
+    if (!specificPopup) return;
+
     specificPopup.classList.remove('show');
     specificPopup.classList.add('hide');
     specificPopup.addEventListener('animationend', () => {
         specificPopup.style.display = 'none';
-        document.getElementById('paymentPopup').classList.add('show');
+        const mainPopup = document.getElementById('paymentPopup');
+        if (mainPopup) mainPopup.classList.add('show');
     }, { once: true });
 }
 
-// Show payment success popup
+// Payment success popup
 function showPaymentSuccessPopup() {
     const successPopup = document.getElementById('paymentSuccessPopup');
+    if (!successPopup) return;
     successPopup.style.display = 'flex';
     successPopup.classList.add('show');
 }
 
-// Hide payment success popup
 function hidePaymentSuccessPopup() {
     const successPopup = document.getElementById('paymentSuccessPopup');
+    if (!successPopup) return;
     successPopup.classList.remove('show');
     successPopup.classList.add('hide');
     successPopup.addEventListener('animationend', () => {
@@ -122,35 +141,52 @@ function hidePaymentSuccessPopup() {
     }, { once: true });
 }
 
-// Handle form submission and show success popup
+// Handle form submission success (called from forms)
 function handlePaymentSuccess(event) {
     event.preventDefault();
-    // Hide the form popup
-    hidePaymentForm(event.target.closest('.payment-popup').id);
-    // Show the payment success popup
+    const form = event.target.closest('.payment-popup');
+    if (form && form.id) {
+        hidePaymentForm(form.id);
+    }
     showPaymentSuccessPopup();
 }
 
-// Attach event listener to open payment popup
-document.querySelector('.fa-plus').addEventListener('click', () => {
-    togglePaymentPopup();
-});
+// Additional event: plus icon also toggles payment popup (original behavior)
+if (plusIcon) {
+    plusIcon.addEventListener('click', () => {
+        togglePaymentPopup();
+    });
+}
 
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                {pageLanguage: 'en'},
-                'google_translate_element'
-            );
-        }
-        // Get the translate icon element
+// Google Translate initialization
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+        { pageLanguage: 'en' },
+        'google_translate_element'
+    );
+}
+
+// Bounce animation for translate icon
 const translateIcon = document.getElementById('translate-icon');
+if (translateIcon) {
+    translateIcon.addEventListener('mouseover', () => {
+        translateIcon.style.animation = 'bounce 0.5s infinite alternate';
+    });
+    translateIcon.addEventListener('mouseleave', () => {
+        translateIcon.style.animation = '';
+    });
+}
 
-// Add bounce animation
-translateIcon.addEventListener('mouseover', () => {
-    translateIcon.style.animation = 'bounce 0.5s infinite alternate';
-});
+// Optional: vibrateBell function (if used elsewhere)
+function vibrateBell() {
+    const bell = document.querySelector('.fa-bell');
+    if (bell) {
+        bell.style.animation = 'none';
+        setTimeout(() => {
+            bell.style.animation = '';
+        }, 10);
+    }
+}
 
-// Reset animation when mouse leaves
-translateIcon.addEventListener('mouseleave', () => {
-    translateIcon.style.animation = '';
-});
+// Ensure any duplicate event listeners do not cause errors
+// (The original had two .fa-plus listeners – we preserve both)
